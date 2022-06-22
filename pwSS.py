@@ -36,14 +36,12 @@ def LoginSaveState():
         context.close()
         browser.close()
 
-def main():
+def generateSS(i):
     with sync_playwright() as p:
-        browser = p.chromium.launch(headless=False)
+        browser = p.chromium.launch()
         context = browser.new_context(storage_state="data/state.json")
 
         page = context.new_page()
-
-        i = 2
 
         # / / / Take SS of the Title
         with page.expect_navigation():
@@ -64,16 +62,16 @@ def main():
 
         #  / / / Take SS of Best Comments
 
-        
-
-
-
-        #page.wait_for_timeout(5000)
+        j = 0
+        for comment in data[i]["comments"]:
+            outline = page.locator('[id="'+comment["comment_id"]+'"]')
+            outline.screenshot(path="images/"+str(i)+"."+str(j)+".png")
+            j += 1
 
         # ----------------------
         context.close()
         browser.close()
 
 if __name__ == "__main__":
-    main()
+    generateSS(1)
 

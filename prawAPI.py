@@ -33,14 +33,14 @@ def getComments(submission):
         if top_level_comment.body in ["[removed]", "[deleted]"]:
             continue
         
-        # Max 20 comments
-        if len(comments) >= 20:
+        # Max 10 comments
+        if len(comments) >= 10:
             break
         
         comments.append({
             "comment_body":top_level_comment.body,
             "comment_url":top_level_comment.permalink,
-            "comment_id":top_level_comment.id
+            "comment_id": "t1_" + top_level_comment.id #Only for top-level-comments
         })
     
     return comments
@@ -71,7 +71,6 @@ def getAskRedditN(n):
         if submission is None: 
             continue
     
-
         #Thread info
         content.append({
             "thread_url": f"http://reddit.com{submission.permalink}",
