@@ -85,5 +85,5 @@ def getAskRedditN(n):
 
 json_object = json.dumps(getAskRedditN(5), indent=4)
 
-with open("data.json", "w") as outfile:
+with open("data/data.json", "w") as outfile:
     outfile.write(json_object)
