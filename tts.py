@@ -1,6 +1,5 @@
 import os
 import json
-from turtle import delay
 
 f = open('data/data.json')
 data = json.load(f)
@@ -12,9 +11,6 @@ def writeFile(text):
     with open ('./data/tmp.txt', 'w', encoding='utf-8') as f:
         f.write(text)
         f.close()
-
-# Get title & comments. If one of this is longer than 200 chars, write it into a file and read it.
-# Remove some chars from strings -> .replace()
 
 def TTSPost(post_index, voice):
     print(post_index)
@@ -44,4 +40,4 @@ def TTSPost(post_index, voice):
 if __name__ == '__main__':
     TTSPost(0, 'en_us_001')
 
-#a = '"Hello World!"' or "\"Hello World!\""
+# Best voices in my opinion: en_us_001 (Female), en_us_010 (Male), en_us_ghostface

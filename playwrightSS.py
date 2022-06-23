@@ -4,7 +4,7 @@
 import json
 from playwright.sync_api import sync_playwright
 
-with open('pw.txt','r') as f: 
+with open('./data/pw.txt','r') as f: 
     pw = f.read()
 
 f = open('data/data.json')
@@ -70,5 +70,5 @@ def generateSS(i):
         browser.close()
 
 if __name__ == "__main__":
-    generateSS(1)
+    generateSS(0)
 

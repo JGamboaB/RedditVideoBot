@@ -1,12 +1,14 @@
 # Write 'python' in terminal -> Select Text -> Shit + Enter -> Run Python in Python Terminal
-# Video Length ~ 1:20 
+
+# Remove some chars from strings -> .replace()
+# Make Tiktok Friendly Monetizable 
 
 import praw
 import json
 
 CLIENT_ID = 'qUDpeAURvHJ_cdMp0lL2-g'
 SECRET_KEY = 'sPeAX68rUSyrg391rZQSSu6B3bkJ5g'
-with open('pw.txt','r') as f: 
+with open('./data/pw.txt','r') as f: 
     pw = f.read()
 
 # Create reddit instance
