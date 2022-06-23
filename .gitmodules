@@ -1,0 +1,3 @@
+[submodule "tiktok-voice"]
+	path = tiktok-voice
+	url = https://github.com/oscie57/tiktok-voice

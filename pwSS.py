@@ -2,7 +2,6 @@
 #playwright install
 
 import json
-from warnings import catch_warnings
 from playwright.sync_api import sync_playwright
 
 with open('pw.txt','r') as f: 
@@ -47,15 +46,13 @@ def generateSS(i):
         with page.expect_navigation():
             page.goto(data[i]["thread_url"])
 
-        # NSFW Warning
-
         NSFWYes = page.locator("text=Yes")
         if NSFWYes.count() > 0:
-            NSFWYes.click()
+            NSFWYes.click() # NSFW Warning
 
         NSFWWarning = page.locator("text=Click to see nsfw")
         if NSFWWarning.count() > 0:
-            NSFWWarning.click()
+            NSFWWarning.click() # Remove "Click to see nsfw" Button in Screenshot
 
         title = page.query_selector('[data-test-id="post-content"]')
         title.screenshot(path="images/"+str(i)+".png")
