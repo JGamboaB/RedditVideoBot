@@ -1,8 +1,15 @@
 # Write 'python' in terminal -> Select Text -> Shit + Enter -> Run Python in Python Terminal
 
-# Remove some chars from strings -> .replace()
-# Remove hyperlinks from text <---------------------
-# Make Tiktok Friendly Monetizable (Censor swear words)
+'''
+TODO:
+* Remove hyperlinks
+* Remove special characters -> .replace()
+* Make Tiktok Friendly -> censor swear words
+
+FIXME:
+* Credentials instead of txt
+
+'''
 
 import praw
 import json

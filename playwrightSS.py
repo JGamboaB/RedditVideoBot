@@ -1,6 +1,11 @@
 #pip install playwright
 #playwright install
 
+'''
+FIXME:
+* Credentials instead of txt
+'''
+
 import json
 from playwright.sync_api import sync_playwright
 

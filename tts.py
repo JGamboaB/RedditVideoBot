@@ -1,3 +1,10 @@
+#Separate audios if too long and then combine them
+
+'''
+TODO:
+* Separate text for tts for better quality of tts and then combine multiple audios into one
+'''
+
 import os
 import json
 
