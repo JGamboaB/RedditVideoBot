@@ -1,7 +1,8 @@
 # Write 'python' in terminal -> Select Text -> Shit + Enter -> Run Python in Python Terminal
 
 # Remove some chars from strings -> .replace()
-# Make Tiktok Friendly Monetizable 
+# Remove hyperlinks from text <---------------------
+# Make Tiktok Friendly Monetizable (Censor swear words)
 
 import praw
 import json
