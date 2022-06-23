@@ -62,7 +62,7 @@ def generateSS(i):
         j = 0
         for comment in data[i]["comments"]:
             outline = page.locator('[id="'+comment["comment_id"]+'"]')
-            outline.screenshot(path="images/"+str(i)+"."+str(j)+".png")
+            outline.screenshot(path="images/"+str(i)+"-"+str(j)+".png")
             j += 1
 
         # ----------------------
