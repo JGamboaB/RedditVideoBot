@@ -109,4 +109,4 @@ def createVideo(post_index):
 
 #Test
 a = createVideo(0)
-a.save_frame("./result/frame.png", t=10.5)
+a.save_frame("./result/frame.png", t=1)

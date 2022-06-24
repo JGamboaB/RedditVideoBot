@@ -6,26 +6,19 @@ TODO:
 * Remove special characters -> .replace()
 * Make Tiktok Friendly -> censor swear words
 
-FIXME:
-* Credentials instead of txt
-
 '''
 
 import praw
 import json
-
-CLIENT_ID = 'qUDpeAURvHJ_cdMp0lL2-g'
-SECRET_KEY = 'sPeAX68rUSyrg391rZQSSu6B3bkJ5g'
-with open('./data/pw.txt','r') as f: 
-    pw = f.read()
+from ..RedditVideoBot.data.config import PASSWORD, USERNAME, USER_AGENT, CLIENT_ID, SECRET_KEY
 
 # Create reddit instance
 reddit = praw.Reddit(
-    client_id=CLIENT_ID,
-    client_secret=SECRET_KEY,
-    password=pw,
-    user_agent="GamboaAPI",
-    username="Sudden_Worth7157"
+    client_id= CLIENT_ID,
+    client_secret= SECRET_KEY,
+    password= PASSWORD,
+    user_agent= USER_AGENT,
+    username=USERNAME
 )
 
 # Example

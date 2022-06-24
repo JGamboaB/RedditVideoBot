@@ -1,16 +1,9 @@
 #pip install playwright
 #playwright install
 
-'''
-FIXME:
-* Credentials instead of txt
-'''
-
 import json
 from playwright.sync_api import sync_playwright
-
-with open('./data/pw.txt','r') as f: 
-    pw = f.read()
+from ..RedditVideoBot.data.config import PASSWORD, USERNAME
 
 f = open('data/data.json')
 data = json.load(f)
@@ -27,10 +20,10 @@ def LoginSaveState():
         page.goto("https://www.reddit.com/login/?dest=https%3A%2F%2Fwww.reddit.com%2F")
        
         user_input = page.query_selector('[id="loginUsername"]')
-        user_input.type("Sudden_Worth7157")
+        user_input.type(USERNAME)
 
         pass_input = page.query_selector('[id="loginPassword"]')
-        pass_input.type(pw)
+        pass_input.type(PASSWORD)
 
         with page.expect_navigation():
             page.query_selector('[type="submit"]').click()
