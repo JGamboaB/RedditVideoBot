@@ -1,6 +1,11 @@
 #pip install playwright
 #playwright install
 
+'''
+TODO:
+* Multiple SS if '\n' is detected
+'''
+
 import json
 from playwright.sync_api import sync_playwright
 from ..RedditVideoBot.data.config import PASSWORD, USERNAME
@@ -44,7 +49,7 @@ def generateSS(i):
         with page.expect_navigation():
             page.goto(data[i]["thread_url"])
 
-        NSFWYes = page.locator("text=Yes")
+        NSFWYes = page.locator("button", has_text="Yes")
         if NSFWYes.count() > 0:
             NSFWYes.click() # NSFW Warning
 

@@ -6,11 +6,16 @@ TODO:
 * Remove special characters -> .replace()
 * Make Tiktok Friendly -> censor swear words
 
+MAYBE:
+* Grab Comments with few text (?)
+
 '''
 
 import praw
 import json
 from ..RedditVideoBot.data.config import PASSWORD, USERNAME, USER_AGENT, CLIENT_ID, SECRET_KEY
+
+MAX_COMMENTS = 6
 
 # Create reddit instance
 reddit = praw.Reddit(
@@ -36,8 +41,8 @@ def getComments(submission):
         if top_level_comment.body in ["[removed]", "[deleted]"]:
             continue
         
-        # Max 10 comments
-        if len(comments) >= 10:
+        # Max comments
+        if len(comments) >= MAX_COMMENTS:
             break
         
         comments.append({

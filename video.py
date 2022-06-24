@@ -5,8 +5,9 @@
 
 '''
 TODO:
-* Change trans_track to some sound effect used in reddit videos
 * Random STARTTIME (taking into account duration of video)
+* Background music? //satisfying video?
+* Channel logo in between transitions
 
 FIXME:
 * Reduce video download time (~30 min) <-------------------------------------------------
@@ -25,7 +26,8 @@ from moviepy.editor import (
 
 #Variables
 H, W = 1920, 1080
-trans_track = AudioFileClip("./audios/silence.mp3")
+trans_name = "Loud Whip.mp3"
+trans_track = AudioFileClip("./audios/trans_sounds/"+trans_name)
 trans_time = trans_track.duration
 STARTTIME = 5
 
@@ -33,20 +35,20 @@ def createAudio(post_index):
     audio_clips = []
     
     #title
-    audio_clips.append(AudioFileClip("./audios/"+str(post_index)+".mp3"))
     audio_clips.append(trans_track)
+    audio_clips.append(AudioFileClip("./audios/"+str(post_index)+".mp3"))
 
     #comments
     audios = os.listdir('./audios/')
-    audios.remove(str(post_index)+".mp3") #removed title
-    audios.remove("silence.mp3") #remove silence track ##########################################
+    audios.remove(str(post_index)+".mp3") #remove title
+    audios.remove('trans_sounds') #remove transition sound effects
 
     total_len, min_len, i = audio_clips[0].duration + trans_time, 45, 2
 
     for audio in audios:
-        if min_len > total_len: 
-            audio_clips.append(AudioFileClip("./audios/"+audio))
+        if min_len > total_len:
             audio_clips.append(trans_track)
+            audio_clips.append(AudioFileClip("./audios/"+audio))
             total_len += audio_clips[i].duration + trans_time
             i+=2
         else: # Acceptable Len
@@ -109,4 +111,4 @@ def createVideo(post_index):
 
 #Test
 a = createVideo(0)
-a.save_frame("./result/frame.png", t=1)
+a.save_frame("./result/frame.png", t=10.5)
