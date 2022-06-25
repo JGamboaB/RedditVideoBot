@@ -1,12 +1,8 @@
-# pip install moviepy
-
-# Video Length ~ min: 0:45
 # Resolution: 1080-1920px <--> 9:16
 
 '''
 TODO:
-* Random STARTTIME (taking into account duration of video)
-* Background music? //satisfying video?
+* Background music?
 * Channel logo in between transitions
 
 FIXME:
@@ -14,6 +10,7 @@ FIXME:
 '''
 
 import os
+from random import randint
 from moviepy.editor import (
     VideoFileClip, 
     AudioFileClip, 
@@ -29,26 +26,24 @@ H, W = 1920, 1080
 trans_name = "Loud Whip.mp3"
 trans_track = AudioFileClip("./audios/trans_sounds/"+trans_name)
 trans_time = trans_track.duration
-STARTTIME = 5
+background_clip_path = "./backgrounds/minecraftparkour1.mp4"
 
 def createAudio(post_index):
     audio_clips = []
     
     #title
-    audio_clips.append(trans_track)
-    audio_clips.append(AudioFileClip("./audios/"+str(post_index)+".mp3"))
+    audio_clips.append(AudioFileClip("./audios/"+str(post_index)+"/0.mp3"))
 
     #comments
-    audios = os.listdir('./audios/')
-    audios.remove(str(post_index)+".mp3") #remove title
-    audios.remove('trans_sounds') #remove transition sound effects
+    audios = os.listdir('./audios/'+str(post_index))
+    audios.remove("0.mp3") #remove title
 
-    total_len, min_len, i = audio_clips[0].duration + trans_time, 45, 2
+    total_len, min_len, i = audio_clips[0].duration, 45, len(audio_clips)
 
     for audio in audios:
         if min_len > total_len:
             audio_clips.append(trans_track)
-            audio_clips.append(AudioFileClip("./audios/"+audio))
+            audio_clips.append(AudioFileClip('./audios/'+str(post_index)+"/"+audio))
             total_len += audio_clips[i].duration + trans_time
             i+=2
         else: # Acceptable Len
@@ -66,23 +61,23 @@ def createVideo(post_index):
     
     #title
     img_clips.append(
-        ImageClip("./images/"+str(post_index)+".png")
-        .set_duration(audio_clips[0].duration + trans_time)
+        ImageClip("./images/"+str(post_index)+"/0.png")
+        .set_duration(audio_clips[0].duration)
         .set_position("center")
         .resize(width = W-100)
         .set_opacity(float(0.8))
     )
 
     #comments
-    imgs = os.listdir('./images')
-    imgs.remove(str(post_index)+".png") #removed title
+    imgs = os.listdir('./images/'+str(post_index))
+    imgs.remove("0.png") #removed title
 
-    num_of_comments = len(audio_clips)/2 - 1
+    num_of_comments = len(audio_clips)/2 +1
 
-    for i in range(0, int(num_of_comments)):
+    for i in range(1, int(num_of_comments)):
         img_clips.append(
-            ImageClip("./images/"+str(post_index)+"-"+str(i)+".png")
-            .set_duration(audio_clips[2+i*2].duration+trans_time)
+            ImageClip("./images/"+str(post_index)+"/"+str(i)+".png")
+            .set_duration(trans_time + audio_clips[2+(i-1)*2].duration)
             .set_position("center")
             .resize(width= W-100)
             .set_opacity(float(0.8))
@@ -93,8 +88,11 @@ def createVideo(post_index):
     img_concat = concatenate_videoclips(img_clips).set_position(("center", "center"))
     img_concat.audio = audio_composite
 
+    background = VideoFileClip(background_clip_path)
+    STARTTIME = randint(0, int(background.duration - audio_composite.duration)-1) 
+
     background_clip = (
-        VideoFileClip("./backgrounds/minecraftparkour1.mp4")
+        VideoFileClip(background_clip_path)
         .without_audio()
         .resize(height = H)
         .crop(x1=1166.6, x2=2246.6)
@@ -109,6 +107,14 @@ def createVideo(post_index):
 
     return final
 
+def downloadVideo(post_index):
+    video = createVideo(post_index)
+    video.set_fps(30) #Supposedly for optimizing in the download
+    video.write_videofile("./result/output.mp4")
+
 #Test
-a = createVideo(0)
-a.save_frame("./result/frame.png", t=10.5)
+#a = createVideo(0)
+#a.save_frame("./result/frame.png", t=10.5)
+
+if __name__ == '__main__':
+    downloadVideo(0)

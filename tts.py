@@ -1,15 +1,11 @@
 '''
 FIXME:
-* Separate text for tts for better quality of tts and then combine multiple audios into one
+* Separate text for tts for better quality of tts
 '''
 
 import os
 import json
-from moviepy.editor import (
-    AudioFileClip, 
-    concatenate_audioclips, 
-    CompositeAudioClip
-)
+from moviepy.editor import AudioFileClip
 
 f = open('data/data.json')
 data = json.load(f)
@@ -28,38 +24,37 @@ def TTSPost(post_index, voice):
     if os.path.exists("./batch/"):
         os.remove("./batch/")
 
+    #Create directory for post
+    if not os.path.exists('./audios/'+str(post_index)):
+        os.makedirs('./audios/'+str(post_index))
+
     # Title
     writeFile(data[post_index]['thread_title'])
     TTSFile(voice, './data/tmp.txt')
 
-    if os.path.exists("./audios/"+str(post_index)+".mp3"):
-        os.remove("./audios/"+str(post_index)+".mp3")
+    if os.path.exists("./audios/"+str(post_index)+"/0.mp3"):
+        os.remove("./audios/"+str(post_index)+"/0.mp3")
 
-    os.rename('voice.mp3', "./audios/"+str(post_index)+".mp3")
+    os.rename('voice.mp3', "./audios/"+str(post_index)+"/0.mp3")
 
     # Comments
-    i = 0
+    i = 1
     for comment in data[post_index]['comments']:
         ##
         '''
-        lines = comment['comment_body'].split('. ')
-        audio_clips = []
-
-        j = 0 ## DELETEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEEE
+        lines = comment['comment_body'].split('\n')
+        lines = list(filter(lambda a: a != '', lines))
 
         for line in lines:
             writeFile(line)
             TTSFile(voice, './data/tmp.txt')
-
-            audio = AudioFileClip("./voice.mp3")
-            audio_clips.append(audio)
-            audio.write_audiofile("./result/"+str(i)+"---"+str(j)+".mp3")
-            j+=1
             
-        audio_concat = concatenate_audioclips(audio_clips)
-        audio_concat.write_audiofile("./audios/"+str(post_index)+"-"+str(i)+".mp3")
+            if os.path.exists("./audios/"+str(post_index)+"/"+str(i)+".mp3"):
+                os.remove("./audios/"+str(post_index)+"/"+str(i)+".mp3")
 
-        i += 1
+            os.rename('voice.mp3', "./audios/"+str(post_index)+"/"+str(i)+".mp3")
+
+            i += 1
         '''
         ##
 
@@ -67,10 +62,10 @@ def TTSPost(post_index, voice):
         writeFile(comment['comment_body'])
         TTSFile(voice, './data/tmp.txt')
 
-        if os.path.exists("./audios/"+str(post_index)+"-"+str(i)+".mp3"):
-            os.remove("./audios/"+str(post_index)+"-"+str(i)+".mp3")
+        if os.path.exists("./audios/"+str(post_index)+"/"+str(i)+".mp3"):
+            os.remove("./audios/"+str(post_index)+"/"+str(i)+".mp3")
 
-        os.rename('voice.mp3', "./audios/"+str(post_index)+"-"+str(i)+".mp3")
+        os.rename('voice.mp3', "./audios/"+str(post_index)+"/"+str(i)+".mp3")
         
         i += 1
         ##

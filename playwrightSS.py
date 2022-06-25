@@ -1,14 +1,6 @@
-#pip install playwright
-#playwright install
-
-'''
-TODO:
-* Multiple SS if '\n' is detected
-'''
-
 import json
 from playwright.sync_api import sync_playwright
-from ..RedditVideoBot.data.config import PASSWORD, USERNAME
+from config import PASSWORD, USERNAME
 
 f = open('data/data.json')
 data = json.load(f)
@@ -38,7 +30,7 @@ def LoginSaveState():
         context.close()
         browser.close()
 
-def generateSS(i):
+def title_comments_ss(i):
     with sync_playwright() as p:
         browser = p.chromium.launch()
         context = browser.new_context(storage_state="data/state.json")
@@ -58,20 +50,37 @@ def generateSS(i):
             NSFWWarning.click() # Remove "Click to see nsfw" Button in Screenshot
 
         title = page.query_selector('[data-test-id="post-content"]')
-        title.screenshot(path="images/"+str(i)+".png")
+        title.screenshot(path="images/"+str(i)+"/0.png")
 
         #  / / / Take SS of Best Comments
 
-        j = 0
+        j = 1
         for comment in data[i]["comments"]:
             outline = page.locator('[id="'+comment["comment_id"]+'"]')
-            outline.screenshot(path="images/"+str(i)+"-"+str(j)+".png")
+            outline.screenshot(path="images/"+str(i)+"/"+str(j)+".png")
             j += 1
+
+            ''' 
+            ## SS of every paragraph --> Problem: SS of hyperlinks
+            outline = page.locator('[id="'+comment["comment_id"]+'"]')
+            p = outline.locator('p')
+
+            index, numOfP = 0, p.count()
+
+            if numOfP == 0:
+                outline.screenshot(path="images/"+str(i)+"/"+str(j)+".png") # Full Comment
+                j += 1
+                continue
+
+            while index < numOfP:
+                p.nth(index).screenshot(path="images/"+str(i)+"/"+str(j)+".png")
+                index += 1
+                j += 1
+            '''
 
         # ----------------------
         context.close()
         browser.close()
 
 if __name__ == "__main__":
-    generateSS(0)
-
+    title_comments_ss(0)

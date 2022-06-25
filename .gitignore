@@ -1,9 +1,10 @@
-images/
-audios/
-data/
-backgrounds/
-result/
+images/0
+audios/0
+data/state.json
+backgrounds/minecraftparkour1.mp4
+result/*.mp4
+result/*.mp3
 *.mp4
 *.mp3
-delete/
 batch/
+config.py

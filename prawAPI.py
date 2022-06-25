@@ -8,12 +8,11 @@ TODO:
 
 MAYBE:
 * Grab Comments with few text (?)
-
 '''
 
 import praw
 import json
-from ..RedditVideoBot.data.config import PASSWORD, USERNAME, USER_AGENT, CLIENT_ID, SECRET_KEY
+from config import PASSWORD, USERNAME, USER_AGENT, CLIENT_ID, SECRET_KEY
 
 MAX_COMMENTS = 6
 
@@ -90,7 +89,9 @@ def getAskRedditN(n):
 
     return content
 
+# Example:
 json_object = json.dumps(getAskRedditN(5), indent=4)
 
 with open("data/data.json", "w") as outfile:
     outfile.write(json_object)
+
